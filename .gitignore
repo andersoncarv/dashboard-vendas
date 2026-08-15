@@ -1,0 +1,16 @@
+# --- Power BI Desktop / PBIP: arquivos locais, nunca versionar ---
+**/.pbi/localSettings.json
+**/.pbi/editorSettings.json
+**/.pbi/cache.abf
+*.pbix
+~$*.pbix
+~$*.pbip
+
+# --- Sistema operacional ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- VS Code ---
+.vscode/*
+!.vscode/extensions.json
