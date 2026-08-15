@@ -1,7 +1,7 @@
 table Vendas
 	lineageTag: 7951376f-4af3-4d92-990a-ed7de8580621
 
-	measure 'Total de Vendas' = SUM(Vendas[Valor])
+	measure 'Total de Vendas' = CALCULATE(SUM(Vendas[Valor]), Vendas[Valor] > 0)
 		formatString: 0
 		lineageTag: df83b620-6364-432b-98ef-255fff675e40
 
