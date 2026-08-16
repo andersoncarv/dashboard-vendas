@@ -5,6 +5,11 @@ table Vendas
 		formatString: 0
 		lineageTag: df83b620-6364-432b-98ef-255fff675e40
 
+	measure 'Ticket Médio' = AVERAGE(Vendas[Valor])
+		lineageTag: 0bef5532-7497-450c-a8ca-2270ac067bfc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Produto
 		dataType: string
 		lineageTag: eecc65cc-7134-4b82-9745-d06fbca0b952
