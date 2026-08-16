@@ -2,6 +2,7 @@ table Medidas
 	lineageTag: 201fefc0-338e-4d12-92ff-cd08bf5ed3be
 
 	measure 'Ticket Médio' = AVERAGE(Vendas[Valor])
+		formatString: 0
 		lineageTag: 0bef5532-7497-450c-a8ca-2270ac067bfc
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
