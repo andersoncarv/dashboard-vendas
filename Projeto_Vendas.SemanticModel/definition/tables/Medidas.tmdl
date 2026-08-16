@@ -1,0 +1,24 @@
+table Medidas
+	lineageTag: 201fefc0-338e-4d12-92ff-cd08bf5ed3be
+
+	measure 'Ticket Médio' = AVERAGE(Vendas[Valor])
+		lineageTag: 0bef5532-7497-450c-a8ca-2270ac067bfc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total de Vendas' = ROUND(SUM(Vendas[Valor]), 0)
+		formatString: 0
+		lineageTag: df83b620-6364-432b-98ef-255fff675e40
+
+	partition Medidas = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Tipo Alterado",{"Coluna 1"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_ResultType = Table
+
