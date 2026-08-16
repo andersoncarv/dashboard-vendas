@@ -6,7 +6,7 @@ table Medidas
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Total de Vendas' = ROUND(CALCULATE(SUM(Vendas[Valor]), Vendas[Valor] >= 100), 0)
+	measure 'Total de Vendas' = CALCULATE(SUM(Vendas[Valor]), Vendas[Valor] >= 100)
 		formatString: 0
 		lineageTag: df83b620-6364-432b-98ef-255fff675e40
 
