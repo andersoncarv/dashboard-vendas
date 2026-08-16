@@ -1,0 +1,49 @@
+name: Validate PBIP structure
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Confirmar arquivos obrigatórios do PBIP
+        shell: bash
+        run: |
+          set -e
+          shopt -s globstar nullglob
+          pbip_files=(**/*.pbip)
+          pbir_files=(**/definition.pbir)
+          pbism_files=(**/definition.pbism)
+
+          if [ ${#pbip_files[@]} -eq 0 ]; then
+            echo "::error::Nenhum arquivo .pbip encontrado no repositório."
+            exit 1
+          fi
+          if [ ${#pbir_files[@]} -eq 0 ]; then
+            echo "::error::Nenhum definition.pbir encontrado (pasta .Report ausente ou incompleta)."
+            exit 1
+          fi
+          if [ ${#pbism_files[@]} -eq 0 ]; then
+            echo "::error::Nenhum definition.pbism encontrado (pasta .SemanticModel ausente ou incompleta)."
+            exit 1
+          fi
+          echo "Arquivos obrigatórios encontrados."
+
+      - name: Validar que todo .json do projeto é JSON válido
+        shell: bash
+        run: |
+          set -e
+          shopt -s globstar nullglob
+          status=0
+          for f in **/*.json; do
+            if ! python -m json.tool "$f" > /dev/null 2>&1; then
+              echo "::error file=$f::JSON inválido -- provável marcador de conflito de merge não removido ou chave/vírgula desbalanceada."
+              status=1
+            fi
+          done
+          exit $status
